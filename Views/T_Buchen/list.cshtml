@@ -1,0 +1,71 @@
+﻿@model List<Buchungen>
+<partial name="_Notifiction" />
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Meine Buchungen</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+
+        </div>
+        <div class=" container">
+            <din class="row pt-4 pb-3">
+                
+            </din>
+
+
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Bild
+                        </th>
+                        <th>
+                            Name der Veranstaltung
+                        </th>
+                        <th>
+                            Adresse
+                        </th>
+                        <th>
+                            Datum & Uhrzeit
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u => u.Id))
+                    {
+                        <tr>
+                            <td>
+                                <img class="buchung" src="@Url.Content("~/Uploads/"+@obj.Veranstaltung?.Bild)" width="170" height="130" />
+                            </td>
+                            <td>
+                                @obj.Veranstaltung?.NamederVeranstaltung
+                            </td>
+                            <td>
+                                @obj.Veranstaltung?.Adresse
+                            </td>
+                            <td>
+                                @obj.Veranstaltung?.Datum
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+      
+    </div>
+</div>

@@ -1,0 +1,153 @@
+﻿@using Organisationstool.Utility;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Organisationstool</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Organisationstool.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EventManager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="Home" asp-action="Index">Hauptseite</a>
+                        </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="A_Veranstaltung" asp-action="Index">Veranstaltungen</a>
+                            </li>
+                            <li class="nav-item  dropdown">
+                                <a  class="nav-link  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Rolle
+                                </a>
+                                <ul class="dropdown-menu ">
+                                    <li class="nav-item ">
+                                        <a class="dropdown-item " asp-controller="AOrganisator" asp-action="Index">Organisatoren</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item"  asp-controller="A_Mitwirkende" asp-action="Index">Mitwirkenden</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item"  asp-controller="AGast" asp-action="Index">Gäste</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="User" asp-action="Index">Rollen anzeigen</a>
+                                    </li>
+                                </ul>
+                            </li>
+                           
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Produkt
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index">Produkten</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Product" asp-action="Cart">Einkaufswagen</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                        }
+                        @if (User.IsInRole(SD.Role_Org))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="O_Veranstaltung" asp-action="Index">Veranstaltungen</a>
+                            </li>
+                            <li class="nav-item  dropdown">
+                                <a class="nav-link  dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Rolle
+                                </a>
+                                <ul class="dropdown-menu ">
+                                   
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="O_Mitwirkende" asp-action="Index">Mitwirkenden</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="OGast" asp-action="Index">Gäste</a>
+                                   
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Produkt
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index">Produkten</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-controller="Product" asp-action="Cart">Einkaufswagen</a>
+                                    </li>
+                                </ul>
+                            </li>
+                          
+                        }
+                        @if (User.IsInRole(SD.Role_Mitw))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="M_Aufgaben" asp-action="Index">Aufgaben</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="T_Buchen" asp-action="list">Meine Buchungen</a>
+                            </li>
+                           
+
+                        }
+                        @if (User.IsInRole(SD.Role_User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="T_Buchen" asp-action="list">Meine Buchungen</a>
+                            </li>
+                        }
+
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            <partial name="_Notifiction" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer bg-primary text-muted">
+        <div class="text-center">
+            EventManager   <i class="bi bi-calendar4-week"></i>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.13.5/i18n/de-DE.json" ></script>
+  
+   
+   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
