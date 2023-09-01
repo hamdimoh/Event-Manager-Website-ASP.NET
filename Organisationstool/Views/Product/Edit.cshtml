@@ -1,0 +1,66 @@
+﻿@model Product
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Produkt bearbeiten</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <input asp-for="Id" hidden />
+                <div class="border p-3 mt-4">
+                   
+                    <div class="mb-3 row p-1">
+                        <label class="p-0">Name</label>
+                        <input asp-for="Name" type="text" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 row p-1">
+                        <label class="p-0">Price</label>
+                        <input asp-for="Price" type="text" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 row p-1">
+                        <label class="p-0">Bild</label>
+                        <input asp-for="Bild" readonly type="text" class="form-control" id="Bild" />
+                        <span asp-validation-for="Bild" class="text-danger"></span>
+                        <input asp-for="BildStream" type="file" class="form-control" id="BildStream" />
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Aktualisieren</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-warning border  form-control">
+                            Zurück
+                        </a>
+                    </div>
+
+
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#BildStream").change(function () {
+            var filename = $(this).val().split("\\").pop();
+            $("#Bild").val(filename);
+        });
+    });
+</script>
